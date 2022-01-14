@@ -13,6 +13,7 @@ route.post('/sendotp/:email',sendotp);
 route.post('/verifyotp',verifyotp);
 route.get('/getAllUsers',getAllUsers)
 
+//route for addingFriends to friends List and Getting Friends List
 route.post('/addFriend',addFriend);
 route.get('/getFriends/:id',getFriends);
 
