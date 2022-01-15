@@ -1,15 +1,17 @@
 import { Avatar, Box,IconButton,Text } from '@chakra-ui/react'
 import { addFriend } from '../../service/api';
 import {AddIcon} from '@chakra-ui/icons';
+import { useToast } from '@chakra-ui/react';
 import React, { useContext,useState,useEffect } from 'react'
 import { addConversation,getConversation } from '../../service/api';
 import { AccountContext } from '../../context/AccountProvider';
 import { PersonContext } from '../../context/PersonProvider';
 
 const User = ({userinfo,info,boolfriend=false}) => {
+    const toast = useToast()
     const {setperson} = useContext(PersonContext);
     const [active,setactive] = useState(false);
-    const {Account,flag,setflag,socket} = useContext(AccountContext);
+    const {Account,flag,setflag,socket,activeUsers} = useContext(AccountContext);
     const [lastmsg,setlastmsg] = useState({});
     useEffect(()=>{
         if(!boolfriend) return;
@@ -37,9 +39,19 @@ const User = ({userinfo,info,boolfriend=false}) => {
             user:userinfo,
             info,
         }
-        await addFriend(data);
-        socket.current.emit('addFriend',{userData:Account,reciverId:info._id})
-        setflag(!flag);
+        if(activeUsers?.some(ele=> ele.id === info._id)){
+            await addFriend(data);
+            socket.current.emit('addFriend',{userData:Account,reciverId:info._id})
+            setflag(!flag);
+        }else{
+            toast({
+                title: `Sorry ${info.name} is Offline`,
+                description: 'Cant send request when user is Offline',
+                status: 'error',
+                duration: '4000'
+            })
+            return;
+        } 
     };
     const addperson = async() => {
         if(!boolfriend) return;
