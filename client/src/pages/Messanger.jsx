@@ -7,7 +7,7 @@ import StartRightPage from '../components/StartRightPage'
 import {PersonContext} from '../context/PersonProvider'
 function Messanger() {
     const {person} = useContext(PersonContext);
-    const {Account,socket,setactiveUsers} = useContext(AccountContext);
+    const {Account,socket,setactiveUsers,flag} = useContext(AccountContext);
 
     useEffect(() => {
         socket.current.emit('addUser',Account._id);
@@ -15,7 +15,7 @@ function Messanger() {
             setactiveUsers(users);
         })
         // eslint-disable-next-line
-    }, [Account])
+    }, [Account,flag])
     
     // const [width,setwidth] = useState(false);
     return (

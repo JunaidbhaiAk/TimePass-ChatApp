@@ -8,10 +8,10 @@ import { AccountContext } from '../context/AccountProvider';
 import { getFriends } from '../service/api';
 
 const Sidebar = () => {
-  const {Account,flag} = useContext(AccountContext);
+  const {Account,flag,setfriends} = useContext(AccountContext);
   const [text,settext] = useState('');
   const [opendrawe, setopendawer] = useState(false);
-  const [friends,setfriends] = useState([]);
+  
   useEffect(()=>{
     const get = async() => {
         // if(friends.length !== 0) return
@@ -38,7 +38,7 @@ const Sidebar = () => {
       >
         <Head setopen={setopendawer} open={opendrawe} />
         <Search open={opendrawe} settext={settext}/>
-        <MultiTabs fri={friends}/>
+        <MultiTabs />
      
       </Box>
       <Box zIndex="999" transition="0.5s all" opacity={opendrawe ? "1" : "0"} transform={opendrawe ? 'translateY(-580px)' : ""}>

@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react'
 import User from './User'
 import { useContext } from 'react'
 
-const Users = ({friends}) => {
-    const {Account} = useContext(AccountContext);
+const Users = () => {
+    const {Account,friends} = useContext(AccountContext);
     const [users,setusers] = useState([]);
     useEffect(()=>{
         const fetchUsers = async() => {
@@ -27,6 +27,7 @@ const Users = ({friends}) => {
         sx={{
             '@media screen and (max-width: 700px)':{
               padding:'0',
+              height:"418px"
             }
           }}>
             <Stack spacing={2}>

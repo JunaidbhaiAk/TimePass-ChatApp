@@ -11,11 +11,11 @@ import ChatWindow from './chatboxcomponents/ChatWindow'
 const Chatbox = () => {
     const {person} = useContext(PersonContext);
     const [conversation,setconversation] = useState({});
-    const [typedmessage,settypedmessage] = useState();
+    const [typedmessage,settypedmessage] = useState('');
     const {socket,Account,flag,setflag} = useContext(AccountContext); 
     const sendmsg = async() => {
         const date = new Date();
-        await addMessage({senderId:Account._id,conversationId:conversation._id,text:typedmessage,createdAt:date});
+        await addMessage({senderId:Account?._id,conversationId:conversation?._id,text:typedmessage,createdAt:date});
         socket.current.emit('sendMessage',{
           senderId:Account._id,
           reciverId:person._id,
@@ -42,7 +42,7 @@ const Chatbox = () => {
           }}> 
             <ChatHead />
             <ChatWindow conversation={conversation}/>
-            <ChatFooter settypedmessage={settypedmessage} sendmsg={sendmsg}/>
+            <ChatFooter settypedmessage={settypedmessage} sendmsg={sendmsg} v={typedmessage}/>
         </Box>
     )
 }

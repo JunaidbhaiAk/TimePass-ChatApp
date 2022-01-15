@@ -9,7 +9,7 @@ import { PersonContext } from '../../context/PersonProvider';
 const User = ({userinfo,info,boolfriend=false}) => {
     const {setperson} = useContext(PersonContext);
     const [active,setactive] = useState(false);
-    const {Account,flag,setflag} = useContext(AccountContext);
+    const {Account,flag,setflag,socket} = useContext(AccountContext);
     const [lastmsg,setlastmsg] = useState({});
     useEffect(()=>{
         if(!boolfriend) return;
@@ -20,6 +20,8 @@ const User = ({userinfo,info,boolfriend=false}) => {
             getConverstionMessage();
             // eslint-disable-next-line
     },[flag])
+
+
     const formateTime = (date) => {
         const d = new Date(date)
         const options = {
@@ -36,7 +38,8 @@ const User = ({userinfo,info,boolfriend=false}) => {
             info,
         }
         await addFriend(data);
-        setflag(!flag)
+        socket.current.emit('addFriend',{userData:Account,reciverId:info._id})
+        setflag(!flag);
     };
     const addperson = async() => {
         if(!boolfriend) return;
@@ -49,7 +52,7 @@ const User = ({userinfo,info,boolfriend=false}) => {
             <Avatar size="sm" src={info.avatar}/>
             <Box display="flex" paddingLeft="15px;" width="100%" justifyContent="space-between" flexDirection={boolfriend ? 'column' : 'row'}>
                 <Text fontSize="1rem" fontWeight="500">{info.name}</Text>
-                {!boolfriend ? <IconButton isRound size="sm" onClick={add}><AddIcon /></IconButton>
+                {!boolfriend ? <IconButton isRound size="sm" onClick={add} backgroundColor="#034488" _hover={{color:"#034488",backgroundColor:"#fff"}}><AddIcon /></IconButton>
                 :<Box display="flex" >
                     <Text fontSize="0.8rem">{lastmsg && lastmsg?.text}</Text>
                     <Text fontSize="0.8rem" marginLeft="auto">{lastmsg.time && formateTime(lastmsg?.time)}</Text>

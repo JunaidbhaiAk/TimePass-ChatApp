@@ -3,7 +3,7 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
 import Users from "./Users";
 
 import FreindsList from "./FreindsList";
-const MultiTabs = ({fri}) => {
+const MultiTabs = () => {
   
  
   return (
@@ -14,10 +14,10 @@ const MultiTabs = ({fri}) => {
       </TabList>
       <TabPanels>
         <TabPanel padding="2px">
-          <FreindsList friends={fri}/>
+          <FreindsList/>
         </TabPanel>
         <TabPanel padding="2px">
-          <Users friends={fri}/>
+          <Users/>
         </TabPanel>
       </TabPanels>
     </Tabs>
