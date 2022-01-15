@@ -6,7 +6,7 @@ export const addUser = async(req,res) => {
 
     try{
       const checkstatus = await otp.find({email:req.body.email});
-      console.log(req.body);
+      // console.log(req.body);
       if(checkstatus.status === false){
         res.status(200).json('Please Verify Your Otp');
         return;

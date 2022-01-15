@@ -13,7 +13,6 @@ const AvatarSelector = ({setprofile,info}) => {
         setprofile((pre) => {
           return { ...pre, avatar: e.target.currentSrc };
         });
-        console.log(info);
         handle();
       };
     return (

@@ -27,15 +27,14 @@ const ChatWindow = ({conversation}) => {
         if(!conversation) return;
         const getMessages = async() => {
             const res = await getMessage(conversation._id);
-            console.log(res);
             setmessages(res?.data);
         }
         getMessages();
     },[conversation,flag,Account])
     return (
         <Box backgroundImage="https://i.redd.it/qwd83nc4xxf41.jpg" width="100%" height="490px" backgroundSize="cover" opacity="8px" display="flex" flexDirection="column" padding="8px" overflowY="scroll" alt="backImage"> 
-            {messages && messages.map((ele)=>{
-                return <Messages text={ele}/>
+            {messages && messages.map((ele,idx)=>{
+                return <Messages text={ele} key={idx}/>
             })}    
         </Box>
     )

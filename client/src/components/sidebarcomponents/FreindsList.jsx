@@ -15,16 +15,16 @@ const FreindsList = () => {
         // eslint-disable-next-line
     },[])
     return (
-        <Box height="440px" padding="5px" overflowY="scroll"
+        <Box height="441px" padding="5px" overflowY="scroll"
         sx={{
             '@media screen and (max-width: 700px)':{
               padding:'0',
-              height:"418px"
+              height:"441px"
             }
           }}>
             <Stack spacing={2}>
-                {friends && friends.map((ele)=>{
-                    return <User key={Math.random()} info={ele} userinfo={Account} boolfriend={true}/>
+                {friends && friends.map((ele,idx)=>{
+                    return <User key={idx} info={ele} userinfo={Account} boolfriend={true}/>
                 })}
             </Stack>
         </Box>

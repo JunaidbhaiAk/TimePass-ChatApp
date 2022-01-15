@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ViewIcon,CheckIcon } from "@chakra-ui/icons";
-import { addUser,sendOtp,verifyOtp } from "../../service/api";
+import { ViewIcon, CheckIcon } from "@chakra-ui/icons";
+import { addUser, sendOtp, verifyOtp } from "../../service/api";
 
 import {
   SlideFade,
@@ -15,15 +15,12 @@ import {
 import AvatarSelector from "./AvatarSelector";
 const SignUp = () => {
   const toast = useToast();
-  
-  const [otp,setotp] = useState(0);
-  const [clientotp,setclientotp] = useState();
+
+  const [otp, setotp] = useState(0);
+  const [clientotp, setclientotp] = useState();
   const [otpinput, setotpinput] = useState(false);
   const [profile, setprofile] = useState({});
-  const [successfull,setsuccesssfull] = useState(false);
- 
- 
-  
+  const [successfull, setsuccesssfull] = useState(false);
 
   const setInput = (e) => {
     setprofile((pre) => {
@@ -31,21 +28,22 @@ const SignUp = () => {
     });
   };
 
-  const send = async() => {
-    if(profile.email === '') return;
+  const send = async () => {
+    if (profile.email === "") return;
     setotpinput(!otpinput);
     const data = await sendOtp(profile.email);
-    data.data.message === 'Please Check Your Mail' ? setotp(data.data.code) : 
-    toast({
-      title: data.data.message,
-      status: "error",
-      isClosable: true,
-      duration: 8000,
-    });
-  }
-  const checkotp = async() => {
-    if(clientotp.length < 6) return;
-    if(otp !== parseInt(clientotp)){
+    data.data.message === "Please Check Your Mail"
+      ? setotp(data.data.code)
+      : toast({
+          title: data.data.message,
+          status: "error",
+          isClosable: true,
+          duration: 8000,
+        });
+  };
+  const checkotp = async () => {
+    if (clientotp.length < 6) return;
+    if (otp !== parseInt(clientotp)) {
       toast({
         title: "Please Enter Correct OTP",
         status: "error",
@@ -54,12 +52,28 @@ const SignUp = () => {
       });
       return;
     }
-    const res = await verifyOtp({email:profile.email,otp:clientotp});
-    res?.data === 'verified' ? setsuccesssfull(true) : console.log(res.data);
-  }
+    const res = await verifyOtp({ email: profile.email, otp: clientotp });
+    res?.data === "verified" ? setsuccesssfull(true) : console.log(res.data);
+  };
 
   const submituser = async () => {
-    // console.log(profile);
+    if (
+      profile.name === "" ||
+      profile.lastname === "" ||
+      profile.email === "" ||
+      successfull === false ||
+      profile.password === "" ||
+      profile.cpassword === "" ||
+      profile.avatar === ""
+    ) {
+      toast({
+        title: `Please fill all the fields`,
+        status: "error",
+        isClosable: true,
+        duration: 4000,
+      });
+      return;
+    }
     profile?.password !== profile.cpassword &&
       toast({
         title: `Password Not Matched!`,
@@ -67,7 +81,6 @@ const SignUp = () => {
         isClosable: true,
         duration: 8000,
       });
-    // console.log(profile);
     const data = await addUser(profile);
     toast({
       title: data.data,
@@ -87,7 +100,7 @@ const SignUp = () => {
       <Box display="flex" flexDirection="column">
         <Stack spacing={5}>
           <Box display="flex" alignItems="center">
-            <AvatarSelector setprofile={setprofile} info={profile}/>
+            <AvatarSelector setprofile={setprofile} info={profile} />
             <Input
               variant="flushed"
               placeholder="Enter Name"
@@ -124,28 +137,31 @@ const SignUp = () => {
                 Send OTP
               </Button>
             </InputRightElement>
-              <InputGroup display={otpinput ? "block" : "none"}>
-                <Input
-                  variant="flushed"
-                  placeholder="Enter Otp"
-                  borderColor={successfull ? 'green' : 'red'}
-                  name="otp"
-                  width="60%"
-                  onChange={(e)=>setclientotp(e.target.value)}
-                />
-                {successfull ? 
-                <Button size="sm" variant="ghost"><CheckIcon boxSize={5} color="green"/></Button> : <Button
-                
-                display={!successfull ? "block" : "none"}
-                colorScheme="teal"
-                variant="ghost"
-                size="sm"
-                onClick={checkotp}
-              >
-                Verify
-              </Button>}
-              </InputGroup>
-            
+            <InputGroup display={otpinput ? "block" : "none"}>
+              <Input
+                variant="flushed"
+                placeholder="Enter Otp"
+                borderColor={successfull ? "green" : "red"}
+                name="otp"
+                width="60%"
+                onChange={(e) => setclientotp(e.target.value)}
+              />
+              {successfull ? (
+                <Button size="sm" variant="ghost">
+                  <CheckIcon boxSize={5} color="green" />
+                </Button>
+              ) : (
+                <Button
+                  display={!successfull ? "block" : "none"}
+                  colorScheme="teal"
+                  variant="ghost"
+                  size="sm"
+                  onClick={checkotp}
+                >
+                  Verify
+                </Button>
+              )}
+            </InputGroup>
           </InputGroup>
           <InputGroup size="md">
             <Input

@@ -27,12 +27,12 @@ const Users = () => {
         sx={{
             '@media screen and (max-width: 700px)':{
               padding:'0',
-              height:"418px"
+              height:"441px"
             }
           }}>
             <Stack spacing={2}>
                 {users && users.map((ele)=>{
-                    return Account._id !== ele._id && !checkarray(ele._id) ? <User key={ele._id} info={ele} userinfo={Account}/> : "";
+                    return Account._id !== ele._id && !checkarray(ele._id) ? <User key={Math.random()} info={ele} userinfo={Account}/> : "";
                 })}
             </Stack>
         </Box>
