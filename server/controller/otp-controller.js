@@ -12,8 +12,8 @@ export const sendotp = async(req,res) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'timepassotp.provider@gmail.com',
-          pass: 'Junaids@007'
+          user: '@gmail.com',
+          pass: 'xxx'
         }
       });
       

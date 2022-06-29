@@ -5,7 +5,8 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    //<App />
+    <p>Site on Updation</p>
   </React.StrictMode>,
   document.getElementById('root')
 );
